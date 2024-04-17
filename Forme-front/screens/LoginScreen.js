@@ -8,6 +8,7 @@ const LoginScreen = () => {
     const [password, setPassword] = useState('');
   return (
     <View style={styles.container}>
+        <Text style={styles.LogoText1}>For Me</Text>
         <View style={styles.inputContainer}>
             <TextInput 
                 placeholder="아이디"
@@ -41,16 +42,20 @@ const LoginScreen = () => {
                     <Text style={[styles.linkText, styles.blueText]}>회원가입</Text>
                 </TouchableOpacity>            
             </View>
+            <View style={styles.bottom}>
             <TouchableOpacity onPress={() => navigation.navigate('Main')}>
                 <Text style={styles.MainButtonText}>고객센터</Text>
             </TouchableOpacity>
+            <Text style={styles.LogoText2}>For Me</Text>
+            </View>
+            
             </View>
                 
-        <Text style={styles.LogoText}>For Me</Text>
+        
     </View>
   )
 }
-// 지금 로그인 - 고객센터 - 비밀번호~회원가입 - 로고 이렇게 됨 알아서,, ㅅ정해저ㅏ마로머ㅏ러ㅏ
+
 export default LoginScreen
 
 const styles = StyleSheet.create({
@@ -124,11 +129,22 @@ const styles = StyleSheet.create({
         marginTop: 30,
         marginBottom: 8
     },
-    LogoText: {
+    LogoText1: {
+        paddingBottom: 50,
+        fontSize: 35,
+        fontWeight: '900',
+        fontStyle: 'italic',
+        color: '#508BFF',
+        textAlign: 'center',
+    },
+    LogoText2: {
         fontWeight: '900',
         fontSize: 20,
         color: '#868E96',
         textAlign: 'center',
         fontStyle: 'italic'
+    },
+    bottom: {
+        
     }
 })
