@@ -4,10 +4,30 @@ import Checkbox from '../assets/checkbox.svg'
 import KebabMenu from '../assets/kebabmenu.svg'
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu'
 
-const TodoItem = ({ todoItem, todoList, setTodoList }) => {
+const TodoItem = ({ todoItem, todoList, setTodoList, category }) => {
   const [ edited, setEdited ] = useState(false);
   const [ newTodo, setNewTodo] = useState(todoItem.todo);
   const editInputRef = useRef(null);
+  const [ categoryLabel, setCategoryLabel ] = useState(null);
+
+  // Todo 항목의 카테고리를 백엔드로부터 받아옴
+  useEffect(() => {
+    // fetch를 사용하여 백엔드와 통신하여 카테고리를 받아옴
+    fetch('your-backend-url/category', {
+      method: 'POST',
+      body: JSON.stringify({ todo: todoItem.todo }), // 현재 Todo 항목을 전송
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
+      .then(response => response.json())
+      .then(data => {
+        setCategoryLabel(data.category); // 받아온 카테고리를 상태에 설정
+      })
+      .catch(error => {
+        console.error('Error:', error);
+      });
+  }, [todoItem.todo]); // todoItem.todo가 변경될 때마다 실행
 
   const onClickEditButton = () => {
     setEdited(true);
@@ -101,6 +121,7 @@ const TodoItem = ({ todoItem, todoList, setTodoList }) => {
           </MenuOption>
         </MenuOptions>
       </Menu>
+      {categoryLabel && <Text>{categoryLabel}</Text>} 
     </View>
 
   )

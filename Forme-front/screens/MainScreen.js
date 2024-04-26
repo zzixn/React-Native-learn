@@ -1,5 +1,5 @@
 import { Button, Modal, Image, SafeAreaView, StatusBar, StyleSheet, Text, TouchableOpacity, View, TextInput, TouchableWithoutFeedback, Keyboard } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { useNavigation } from '@react-navigation/native';
 import settingsIcon from '../assets/settings.png';
 import notionIcon from '../assets/notion.png';
@@ -7,24 +7,37 @@ import fireIcon from '../assets/fire.png';
 import { Path, Svg } from 'react-native-svg';
 import CalendarButton from '../components/CalendarButton';
 import TodoItemList from '../components/TodoItemList';
-import InputForm from '../components/InputForm';
+
 
 const MainScreen = () => {
     const [ todoList, setTodoList ] = useState([]);
-
     const navigation = useNavigation();
 
     const [ modalVisible, setModalVisible ] = useState(false);
-    const [ category, setCategory ] = useState('');
-    const [ goal, setGoal ] = useState('');
+    const [ todo, setTodo ] = useState('');
+    const inputRef = useRef(null);
 
-    const handlePress = () => {
-        console.log('Category:', category);
-        console.log('Goal:', goal);
-        setModalVisible(false);
-        setCategory('');
-        setGoal('');
+    const onTodoInput = (newTodo) => {
+        setTodo(newTodo);
     };
+
+    const onPressAdd = () => {
+        if (todo.trim() === ''){ // 입력값이 없으면 아무 동작도 하지 않음
+            return;
+        }
+
+        const NewTodoList = [...todoList, { id: todoList.length, todo, checked: false, delete: false }];
+        setTodoList(NewTodoList);
+
+        setTodo(''); // 입력값 초기화
+        if(inputRef.current){
+        inputRef.current.clear(); // 입력창 내용 비우기
+        inputRef.current.focus();
+    }
+        setModalVisible(false);
+    };
+
+        
 
     const [ isFilled, setIsFilled ] = useState(false);
 
@@ -69,15 +82,15 @@ const MainScreen = () => {
             </View>
             <CalendarButton style={styles.calendarButton}/>
             <View style={styles.listView}>
-            <InputForm todoList={todoList} setTodoList={setTodoList} />
+            {/* <InputForm todoList={todoList} setTodoList={setTodoList} /> */}
             <TodoItemList 
-                title={'할 일'}
+                title={'카테고리 들어가야 하는데...'}
                 todoList={todoList}
                 setTodoList={setTodoList}
                 checkedList={false}
             />
             <TodoItemList 
-                title={'완료한 항목'}
+                title={'완료됨'}
                 todoList={todoList}
                 setTodoList={setTodoList}
                 checkedList={true}
@@ -97,28 +110,21 @@ const MainScreen = () => {
                     <View style={styles.modalContainer}>
                         <TouchableWithoutFeedback onPress={() => {}}>
                             <View style={styles.modalContent}>
-                                <Text style={styles.modalTitle}>카테고리</Text>
-                                <TextInput
-                                    style={styles.input}
-                                    value={category}
-                                    onChangeText={text => setCategory(text)}
-                                    placeholder="카테고리를 입력하세요"
-                                />
                                 <Text style={styles.modalTitle}>목표 이름</Text>
                                 <TextInput
                                     style={styles.input}
-                                    value={goal}
-                                    onChangeText={text => setGoal(text)}
+                                    value={todo}
+                                    ref={inputRef}
+                                    onChangeText={onTodoInput}
                                     placeholder="목표 이름을 입력하세요"
                                 />
-                                <Button title="저장" onPress={handlePress} />
+                                <Button title="저장" onPress={onPressAdd} />
                             </View>
                         </TouchableWithoutFeedback>
                     </View>
                 </TouchableWithoutFeedback>
             </Modal>
             <Button title="로그인 화면" onPress={() => navigation.navigate('Home')} />
-            <Button title="테스트" onPress={() => navigation.navigate('Test')} />
             <View style={styles.menuBar} >
                 <View style={styles.iconContainer}>
                     <TouchableOpacity style={styles.menuIcon}>

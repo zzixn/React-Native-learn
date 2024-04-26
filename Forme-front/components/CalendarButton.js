@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { View, TouchableOpacity, Modal, Text, StyleSheet } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { Svg, Path } from 'react-native-svg';
+import RightIcon from '../assets/right.svg';
+import LeftIcon from '../assets/left.svg';
 
 const CalendarButton = ({}) => {
   const [showCalendar, setShowCalendar] = useState(false);
@@ -61,9 +63,7 @@ const CalendarButton = ({}) => {
       </TouchableOpacity>
       <View style={styles.buttonContainer}>
       <TouchableOpacity style={styles.button} onPress={goToPreviousDay}>
-        <Svg width="24" height="24" viewBox="0 0 24 24">
-          <Path d="M15 6L9 12L15 18"></Path>
-        </Svg>
+        <LeftIcon />
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={() => setShowCalendar(true)}>
         <Text style={styles.buttonText}>
@@ -71,9 +71,7 @@ const CalendarButton = ({}) => {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.button} onPress={goToNextDay}>
-        <Svg width="24" height="24" viewBox="0 0 24 24">
-          <Path d="M9 6L15 12L9 18"></Path>
-        </Svg>
+        <RightIcon />
       </TouchableOpacity>
       </View>
     </View>
@@ -98,17 +96,15 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   todayButton: {
-    marginTop: 30,
-    paddingHorizontal: 20,
-    borderRadius: 5
+    paddingVertical: 12
   },
   todayText: {
-    fontSize: 20,
+    fontSize: 18,
     color: '#515151',
     fontWeight: '800'
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#515151',
     fontWeight: '500'
   },
