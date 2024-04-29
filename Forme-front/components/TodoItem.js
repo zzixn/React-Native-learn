@@ -1,4 +1,4 @@
-import { Pressable, StyleSheet, Text, TextInput, View, Modal, Button, Alert } from 'react-native'
+import { Pressable, StyleSheet, Text, TextInput, View, Alert, TouchableWithoutFeedback, TouchableOpacity } from 'react-native'
 import React, { useEffect, useRef, useState } from 'react'
 import Checkbox from '../assets/checkbox.svg'
 import KebabMenu from '../assets/kebabmenu.svg'
@@ -80,11 +80,7 @@ const TodoItem = ({ todoItem, todoList, setTodoList, category }) => {
     }
   }, [edited]);
 
-  {/* const [ modalVisible, setModalVisible ] = useState(false);
-
-  const toggleMenu = () => {
-    setModalVisible(!modalVisible);
-  } */} 
+  const Divider = () => <View style={styles.divider} />;
 
   return (
     <View style={styles.itemContainer}>
@@ -99,9 +95,6 @@ const TodoItem = ({ todoItem, todoList, setTodoList, category }) => {
             onChangeText={setNewTodo}
             ref={editInputRef}
           />
-          <Pressable onPress={onClickSubmitButton}>
-            <Text style={styles.submitButton}>완료</Text>
-          </Pressable>
         </View>
       ) : (
         <Text style={[styles.itemText, todoItem.checked && styles.checkedItemText]}>
@@ -110,13 +103,26 @@ const TodoItem = ({ todoItem, todoList, setTodoList, category }) => {
       )}      
       <Menu>
         <MenuTrigger>
-          <KebabMenu />
+          {edited ? (
+            <TouchableOpacity 
+              onPress={onClickSubmitButton} 
+              style={[styles.submitButtonContainer, styles.submitButton]}
+              hitSlop={10}
+            >
+              <Text style={styles.submitButton}>완료</Text>
+            </TouchableOpacity>
+          ) : (
+            <KebabMenu />
+          )}  
         </MenuTrigger>
-        <MenuOptions>
+        <MenuOptions optionsContainerStyle={styles.optionStyle}>
+          <View style={styles.edit}>
           <MenuOption onSelect={onClickEditButton}>
             <Text>수정하기</Text>
           </MenuOption>
-          <MenuOption onSelect={onClickDeleteButton}>
+          </View>
+          <Divider />
+          <MenuOption style={styles.delete} onSelect={onClickDeleteButton}>
             <Text>삭제하기</Text>
           </MenuOption>
         </MenuOptions>
@@ -168,5 +174,32 @@ const styles = StyleSheet.create({
   },
   itemText: {
     flex: 1, // Todo 항목이 가능한 큰 공간을 차지하도록
+  },
+  editInput: {
+    flex: 1,
+    marginRight: 80
+  },
+  submitButtonContainer: {
+    right: 70,
+    marginBottom: 3,
+    paddingBottom: 4,
+    paddingHorizontal: 4,
+    backgroundColor: '#508BFF',
+    borderRadius: 10
+  },
+  submitButton: {
+    fontWeight: 'bold',
+    color: 'white'
+  },
+  divider: {
+    height: 1,
+    backgroundColor: '#515151'
+  },
+  optionStyle: {
+    width: '30%',
+    borderRadius: 7
+  },
+  editInputContainer: {
+    flexDirection: 'row'
   }
 })

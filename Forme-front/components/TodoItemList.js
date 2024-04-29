@@ -24,14 +24,18 @@ const TodoItemList = ({ title, todoList, setTodoList, checkedList }) => {
 
 const styles = StyleSheet.create({
   titleContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginHorizontal: 60,
+    paddingTop: 25,
+    paddingBottom: 5
   },
   todoCount: {
     fontSize: 16,
     color: '#666', // 예시로 회색으로 표시
   },
-  listContainer: {
-    
+  title: {
+    color: '#515151',
+    fontWeight: 'bold'
   }
 })
 

@@ -54,6 +54,11 @@ const MainScreen = () => {
     const handleModalClose = () => {
         setIsFilled(false);
     };
+    
+    const closeModal = () => {
+        setTodo('');
+        setModalVisible(false);
+    }
 
     useEffect(() => {
         if (!modalVisible) {
@@ -70,7 +75,6 @@ const MainScreen = () => {
                     <Image source={settingsIcon} style={styles.settings} />
                 </TouchableOpacity>
                 </View>
-                <Text style={styles.pageTitle}>For Me</Text>
                 <View style={styles.rightSettings}>
                 <TouchableOpacity onPress={() => navigation.navigate('Home')}>
                     <Image source={notionIcon} style={styles.settings} />
@@ -80,24 +84,26 @@ const MainScreen = () => {
                 </TouchableOpacity>
                 </View>
             </View>
-            <CalendarButton style={styles.calendarButton}/>
+            <Text style={styles.pageTitle}>For Me</Text>
+            <CalendarButton />
+            <Text style={styles.subTitle}>매일 실천 체크리스트</Text>
             <View style={styles.listView}>
-            {/* <InputForm todoList={todoList} setTodoList={setTodoList} /> */}
-            <TodoItemList 
-                title={'카테고리 들어가야 하는데...'}
-                todoList={todoList}
-                setTodoList={setTodoList}
-                checkedList={false}
-            />
-            <TodoItemList 
-                title={'완료됨'}
-                todoList={todoList}
-                setTodoList={setTodoList}
-                checkedList={true}
-            />
-            </View>
-        
-            
+                
+                
+                <TodoItemList 
+                    title={'카테고리 들어가야 하는데...'}
+                    todoList={todoList}
+                    setTodoList={setTodoList}
+                    checkedList={false}
+                />
+                <TodoItemList 
+                    title={'완료됨'}
+                    todoList={todoList}
+                    setTodoList={setTodoList}
+                    checkedList={true}
+                />
+                
+            </View>            
             <Modal
                 animationType="fade"
                 transparent={true} // true = 모달 열어도 뒤에 화면 보이게, false = 모달 열면 뒤에 화면 불투명하게
@@ -106,7 +112,7 @@ const MainScreen = () => {
                     setModalVisible(false);
                 }}
             >
-                <TouchableWithoutFeedback onPress={() => setModalVisible(false)}>
+                <TouchableWithoutFeedback onPress={(closeModal)}>
                     <View style={styles.modalContainer}>
                         <TouchableWithoutFeedback onPress={() => {}}>
                             <View style={styles.modalContent}>
@@ -201,11 +207,11 @@ const styles = StyleSheet.create({
         backgroundColor: '#f7f8fa'
     },
     header: {
-        // flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
         paddingHorizontal: 15,
+        top: 15
     },
     pageTitle: {
         fontSize: 35,
@@ -213,6 +219,7 @@ const styles = StyleSheet.create({
         fontStyle: 'italic',
         color: '#508BFF',
         textAlign: 'center',
+        bottom: 20
     },
     leftSettings: {
         flexDirection: 'row',
@@ -228,7 +235,8 @@ const styles = StyleSheet.create({
         resizeMode: 'contain'
     },
     listView: {
-         flex: 1
+         flex: 1,
+         
     },
     listTitle: {
         marginBottom: 25,
@@ -280,8 +288,11 @@ const styles = StyleSheet.create({
         padding: 10,
         marginBottom: 20
     },
-    calendarButton: {
-        width: 50,
-        height: 50
+    subTitle: {
+        color: '#515151',
+        fontWeight: '800',
+        fontSize: 18,
+        paddingLeft: 30,
+        paddingTop: 15
     }
 })

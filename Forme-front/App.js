@@ -10,9 +10,9 @@ import axios from 'axios';
 
 export default function App() {
 
-axios.get('https://my-json-server.typicode.com/typicode/demo/posts').then(
+{/* axios.get('https://my-json-server.typicode.com/typicode/demo/posts').then(
   function(response) {console.log(response);}
-);
+); */}
 
   const Stack = createNativeStackNavigator();
   return (

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Modal, Text, StyleSheet } from 'react-native';
+import { View, TouchableOpacity, Modal, Text, StyleSheet, Pressable } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { Svg, Path } from 'react-native-svg';
 import RightIcon from '../assets/right.svg';
@@ -38,7 +38,7 @@ const CalendarButton = ({}) => {
   };
 
   return (
-    <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+    <View style={styles.calendarContainer}>
       <Modal
         visible={showCalendar}
         animationType="fade"
@@ -79,6 +79,10 @@ const CalendarButton = ({}) => {
 };
 
 const styles = StyleSheet.create({
+  calendarContainer: { 
+    justifyContent: 'center', 
+    alignItems: 'center',
+  },
   modalOverlay: {
     flex: 1,
     justifyContent: 'center',
