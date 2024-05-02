@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, Modal, Text, StyleSheet, Pressable } from 'react-native';
+import { View, TouchableOpacity, Modal, Text, StyleSheet } from 'react-native';
 import { Calendar } from 'react-native-calendars';
 import { Svg, Path } from 'react-native-svg';
 import RightIcon from '../assets/right.svg';
 import LeftIcon from '../assets/left.svg';
 
-const CalendarButton = ({}) => {
+const CalendarButton = ({ setTodoList }) => {
   const [showCalendar, setShowCalendar] = useState(false);
   const [selectedDate, setSelectedDate] = useState(null);
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -13,23 +13,27 @@ const CalendarButton = ({}) => {
   const handleDateSelect = (day) => {
     setSelectedDate(day.dateString);
     setShowCalendar(false); // 날짜를 선택하면 모달을 닫습니다.
+    setTodoList([]);
   };
 
   const goToToday = () => {
     setSelectedDate(null); // 선택한 날짜 초기화하여 현재 날짜로 되돌아갑니다.
     setCurrentDate(new Date()); // 현재 날짜 업데이트
+    setTodoList([]);
   };
 
   const goToPreviousDay = () => {
     const previousDate = new Date(selectedDate || currentDate);
     previousDate.setDate(previousDate.getDate() - 1);
     setSelectedDate(previousDate.toISOString().split('T')[0]);
+    setTodoList([]);
   };
   
   const goToNextDay = () => {
     const nextDate = new Date(selectedDate || currentDate);
     nextDate.setDate(nextDate.getDate() + 1);
     setSelectedDate(nextDate.toISOString().split('T')[0]);
+    setTodoList([]);
   };
 
   const formatCurrentDate = (date) => {

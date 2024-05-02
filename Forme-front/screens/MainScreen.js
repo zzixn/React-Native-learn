@@ -11,11 +11,11 @@ import TodoItemList from '../components/TodoItemList';
 
 const MainScreen = () => {
     const [ todoList, setTodoList ] = useState([]);
-    const navigation = useNavigation();
-
     const [ modalVisible, setModalVisible ] = useState(false);
     const [ todo, setTodo ] = useState('');
+    const [selectedDate, setSelectedDate] = useState(null);
     const inputRef = useRef(null);
+    const navigation = useNavigation();
 
     const onTodoInput = (newTodo) => {
         setTodo(newTodo);
@@ -85,7 +85,7 @@ const MainScreen = () => {
                 </View>
             </View>
             <Text style={styles.pageTitle}>For Me</Text>
-            <CalendarButton />
+            <CalendarButton setTodoList={setTodoList} />
             <Text style={styles.subTitle}>매일 실천 체크리스트</Text>
             <View style={styles.listView}>
                 
@@ -95,12 +95,14 @@ const MainScreen = () => {
                     todoList={todoList}
                     setTodoList={setTodoList}
                     checkedList={false}
+                    selectedDate={selectedDate}
                 />
                 <TodoItemList 
                     title={'완료됨'}
                     todoList={todoList}
                     setTodoList={setTodoList}
                     checkedList={true}
+                    selectedDate={selectedDate}
                 />
                 
             </View>            
@@ -289,10 +291,10 @@ const styles = StyleSheet.create({
         marginBottom: 20
     },
     subTitle: {
-        color: '#515151',
+        color: '#343A40',
         fontWeight: '800',
-        fontSize: 18,
-        paddingLeft: 30,
+        fontSize: 17,
+        paddingLeft: 40,
         paddingTop: 15
     }
 })

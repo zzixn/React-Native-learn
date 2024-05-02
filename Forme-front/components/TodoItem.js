@@ -161,7 +161,7 @@ export default TodoItem
 const styles = StyleSheet.create({
   itemContainer: {
     flexDirection: 'row',
-    backgroundColor: '#EEEEEE', // 회색 바탕
+    backgroundColor: '#DEE2E6', // 회색 바탕
     borderRadius: 10, // 모서리 둥글
     padding: 10, // 안쪽 여백
     alignItems: 'center', // 수직 중앙 정령, 왜?
@@ -185,7 +185,7 @@ const styles = StyleSheet.create({
     paddingBottom: 4,
     paddingHorizontal: 4,
     backgroundColor: '#508BFF',
-    borderRadius: 10
+    borderRadius: 4
   },
   submitButton: {
     fontWeight: 'bold',

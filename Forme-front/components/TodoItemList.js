@@ -2,7 +2,7 @@ import { FlatList, StyleSheet, Text, View } from 'react-native'
 import React from 'react'
 import TodoItem from './TodoItem'
 
-const TodoItemList = ({ title, todoList, setTodoList, checkedList }) => {
+const TodoItemList = ({ title, todoList, setTodoList, checkedList, selectedDate }) => {
   return (
     <View style={styles.container}>
       <View style={styles.titleContainer}>
@@ -11,7 +11,11 @@ const TodoItemList = ({ title, todoList, setTodoList, checkedList }) => {
       </View>
       <View style={styles.listContainer}>
         <FlatList
-          data={todoList.filter(todoItem => !todoItem.deleted && checkedList === todoItem.checked)}
+          data={todoList.filter(todoItem => 
+            !todoItem.deleted && 
+            checkedList === todoItem.checked &&
+            (selectedDate ? todoItem.date === selectedDate : true)
+          )}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
             <TodoItem todoItem={item} todoList={todoList} setTodoList={setTodoList} />
@@ -34,9 +38,10 @@ const styles = StyleSheet.create({
     color: '#666', // 예시로 회색으로 표시
   },
   title: {
-    color: '#515151',
+    color: '#343A40',
     fontWeight: 'bold'
-  }
+  },
+  listContainer: {}
 })
 
 export default TodoItemList
