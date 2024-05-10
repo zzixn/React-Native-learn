@@ -1,13 +1,36 @@
 import { Button, StyleSheet, Text, View, Image, TouchableOpacity, TextInput } from 'react-native'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useNavigation } from '@react-navigation/native';
 
 const LoginScreen = () => {
+
+    const [data, setData] = useState([]);
+    const getDatas = async () => {
+        try {
+            const response = await fetch('http://10.0.2.2:8080/api/mypage/services');
+            const json = await response.json();
+            setData(json);
+        } catch(error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        getDatas();
+    }, []);
+
     const navigation = useNavigation();
     const [id, setId] = useState('');
     const [password, setPassword] = useState('');
   return (
     <View style={styles.container}>
+        {data.map((item) => (
+            <View key={item.id}>
+                <Text>Title: {item.title}</Text>
+                <Text>Content: {item.content}</Text>
+                <Text>User Id: {item.user_id}</Text>    
+            </View>
+        ))}
         <Text style={styles.LogoText1}>For Me</Text>
         <View style={styles.inputContainer}>
             <TextInput 

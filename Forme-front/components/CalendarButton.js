@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { View, TouchableOpacity, Modal, Text, StyleSheet } from 'react-native';
 import { Calendar } from 'react-native-calendars';
-import { Svg, Path } from 'react-native-svg';
 import RightIcon from '../assets/right.svg';
 import LeftIcon from '../assets/left.svg';
 
