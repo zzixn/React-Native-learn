@@ -29,17 +29,18 @@ const StatScreen = () => {
   ];
   const categoryColors = ['#6A9DFF', '#97BAFF', '#B9D0FF', '#CDCDCD', '#B2B2B2'];
   const categoryData = {
-    year: ['운동', '독서', '공부', '요리', '여행'], 
-    month: ['운동', '독서', '공부', '요리', '프로그래밍'],
-    week: ['독서', '공부', '요리', '프로그래밍', '여행']
+    year: [{ category: '운동', count: 10 }, { category: '독서', count: 8 }, { category: '공부', count: 7 }, { category: '요리', count: 5 }, { category: '여행', count: 3 }],
+    month: [{ category: '운동', count: 5 }, { category: '독서', count: 4 }, { category: '공부', count: 4 }, { category: '요리', count: 2 }, { category: '프로그래밍', count: 1 }],
+    week: [{ category: '독서', count: 3 }, { category: '공부', count: 3 }, { category: '요리', count: 2 }, { category: '프로그래밍', count: 1 }, { category: '여행', count: 1 }]
   };
 
   const CategoryRanking = ({ data }) => {
     return (
       <View style={styles.categoryContainer}>
-      {data.map((category, index) => (
+      {data.map((item, index) => (
         <View key={index} style={[styles.categoryItemContainer, { backgroundColor: categoryColors[index] }]}>
-          <Text style={styles.categoryItem}>{`${index + 1} ${category}`}</Text>
+          <Text style={styles.categoryItem}>{`${index + 1} ${item.category}`}</Text>
+          <Text style={styles.categoryCount}>{item.count}회</Text>
         </View>
       ))}
     </View>
@@ -80,6 +81,9 @@ const StatScreen = () => {
             yAxisThickness={0} // Y축 두께
             xAxisThickness={0} // X축 두께
             hideRules // 기준선 지우기
+            //spacing={15}
+            stepHeight={180}
+            maxValue={10}
           />
         </View>
       </View>
@@ -196,6 +200,8 @@ const styles = StyleSheet.create({
   
   },
   categoryItemContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
     width: 360,
     backgroundColor: '#FFFFFF',
     padding: 5,
@@ -203,21 +209,30 @@ const styles = StyleSheet.create({
     marginBottom: 4,
     alignContent: 'center',
     justifyContent: 'space-between',
-    marginLeft: 10
+    marginLeft: 10,
+    bottom: 20
   },
   categoryItem: {
     color: '#FFFFFF',
     fontWeight: "800",
-    fontSize: 10,
+    fontSize: 20,
     paddingLeft: 20,
-    paddingTop: 15,
+    marginBottom: 8
+  },
+  categoryCount: {
+    color: '#FFFFFF',
+    fontWeight: "800",
+    fontSize: 20,
+    paddingLeft: 20,
+    marginBottom: 8,
+    marginRight: 20
   },
   subtitle: {
     color: "#343A40",
     fontWeight: "800",
     fontSize: 14,
     paddingLeft: 20,
-    paddingTop: 15,
+    
   },
   menuBar: {
     height: 60,
@@ -227,7 +242,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 0, // 화면 하단에 고정
     left: 0, // 왼쪽 정렬
-    right: 0, // 오른쪽 정렬
+    right: 0, // 오른쪽 정렬 
     // flex: 1
   },
   menuIcon: {
@@ -246,7 +261,8 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "flex-end",
     marginBottom: 10,
-    paddingRight: 15
+    paddingRight: 15,
+    bottom: 19
   },
   periodButton: {
     paddingHorizontal: 10,
@@ -269,8 +285,5 @@ const styles = StyleSheet.create({
   },
   categoryContainer: {
     marginBottom: 10,
-  },
-  categoryItem: {
-    fontSize: 16,
-  },
+  }
 });
