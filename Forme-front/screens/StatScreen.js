@@ -14,19 +14,43 @@ import { BarChart } from "react-native-gifted-charts";
 const StatScreen = () => {
   const navigation = useNavigation();
   const [selectedPeriod, setSelectedPeriod] = useState('year');
+  const [selectedStatPeriod, setSelectedStatPeriod] = useState('year');
 
   const handlePeriodChange = (period) => {
     setSelectedPeriod(period);
+
+  };
+  const handleStatPeriodChange = (period) => {
+    setSelectedStatPeriod(period);
   };
 
-  const data = [
-    { value: 5, label: "'19" },
-    { value: 6, label: "'20" },
-    { value: 7, label: "'21" },
-    { value: 8, label: "'22" },
-    { value: 9, label: "'23" },
-    { value: 10, label: "'24" },
-  ];
+
+  const data = {
+    year: [
+      { value: 5, label: "'19" },
+      { value: 6, label: "'20" },
+      { value: 7, label: "'21" },
+      { value: 8, label: "'22" },
+      { value: 9, label: "'23" },
+      { value: 2, label: "'24" },
+    ],
+    month: [
+      { value: 4, label: "Jan" },
+      { value: 5, label: "Feb" },
+      { value: 6, label: "Mar" },
+      { value: 7, label: "Apr" },
+      { value: 8, label: "May" },
+      { value: 9, label: "Jun" },
+    ],
+    week: [
+      { value: 1, label: "'19" },
+      { value: 2, label: "'20" },
+      { value: 3, label: "'21" },
+      { value: 4, label: "'22" },
+      { value: 5, label: "'23" },
+      { value: 6, label: "'24" },
+    ],
+  }
   const categoryColors = ['#6A9DFF', '#97BAFF', '#B9D0FF', '#CDCDCD', '#B2B2B2'];
   const categoryData = {
     year: [{ category: '운동', count: 10 }, { category: '독서', count: 8 }, { category: '공부', count: 7 }, { category: '요리', count: 5 }, { category: '여행', count: 3 }],
@@ -70,6 +94,26 @@ const StatScreen = () => {
       <Text style={styles.pageTitle}>For Me</Text>
       <View style={styles.achievementRate}>
         <Text style={styles.subtitle}>체크리스트 달성율 통계</Text>
+        <View style={styles.graphPeriodButtons}>
+            <TouchableOpacity
+              style={[styles.periodButton, selectedStatPeriod === 'year' && styles.selectedPeriodButton]}
+              onPress={() => handleStatPeriodChange('year')}
+            >
+              <Text style={styles.periodButtonText}>연간</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.periodButton, selectedStatPeriod === 'month' && styles.selectedPeriodButton]}
+              onPress={() => handleStatPeriodChange('month')}
+            >
+              <Text style={styles.periodButtonText}>월간</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={[styles.periodButton, selectedStatPeriod === 'week' && styles.selectedPeriodButton]}
+              onPress={() => handleStatPeriodChange('week')}
+            >
+              <Text style={styles.periodButtonText}>주간</Text>
+            </TouchableOpacity>
+          </View>
         <View style={styles.chartBox}>
           <BarChart
             barMarginBottom={0} // x축 두께 늘리면 얘도 늘랴즉;
@@ -77,7 +121,7 @@ const StatScreen = () => {
             noOfSections={1} // 세로축 섹션
             barBorderRadius={4} // 모서리 둥글게
             frontColor="#508BFF" // bar 색상
-            data={data}
+            data={data[selectedPeriod]}
             yAxisThickness={0} // Y축 두께
             xAxisThickness={0} // X축 두께
             hideRules // 기준선 지우기
@@ -89,7 +133,7 @@ const StatScreen = () => {
       </View>
       <View style={styles.achievementCategory}>
       <Text style={styles.subtitle}>최다 달성 카테고리</Text>
-      <View style={styles.periodButtons}>
+      <View style={styles.categoryPeriodButtons}>
             <TouchableOpacity
               style={[styles.periodButton, selectedPeriod === 'year' && styles.selectedPeriodButton]}
               onPress={() => handlePeriodChange('year')}
@@ -110,7 +154,6 @@ const StatScreen = () => {
             </TouchableOpacity>
           </View>
           <CategoryRanking data={categoryData[selectedPeriod]}/>
-
         </View>
       <View style={styles.menuBar}>
         <View style={styles.iconContainer}>
@@ -187,11 +230,7 @@ const styles = StyleSheet.create({
     padding: 10,
     backgroundColor: "white",
     borderRadius: 10,
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-    elevation: 5, // 안드로이드 그림자
+    borderColor: "#000000",
     paddingBottom: 30,
     marginLeft: 20,
     marginTop: 10
@@ -257,7 +296,13 @@ const styles = StyleSheet.create({
   achievementRate: {
     marginBottom: 20,
   },
-  periodButtons: {
+  graphPeriodButtons: {
+    flexDirection: "row",
+    justifyContent: "flex-end",
+    paddingRight: 15,
+    bottom: 19
+  },
+  categoryPeriodButtons: {
     flexDirection: "row",
     justifyContent: "flex-end",
     marginBottom: 10,
