@@ -136,7 +136,6 @@ const MainScreen = () => {
                     </View>
                 </TouchableWithoutFeedback>
             </Modal>
-            <Button title="테스트 화면" onPress={() => navigation.navigate('Test')} />
             <Button title="로그인 화면" onPress={() => navigation.navigate('Home')} />
             <View style={styles.menuBar} >
                 <View style={styles.iconContainer}>

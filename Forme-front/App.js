@@ -8,7 +8,6 @@ import { MenuProvider } from 'react-native-popup-menu';
 import { useEffect } from 'react';
 import RequestService from './services/RequestService';
 import StatScreen from './screens/StatScreen';
-import TestScreen from './screens/TestScreen';
 
 export default function App() {
 
@@ -59,7 +58,6 @@ export default function App() {
         <Stack.Screen options={{ headerShown: false }} name="Home" component={HomeScreen} />  
         <Stack.Screen options={{ headerShown: false }} name="Login" component={LoginScreen} />
         <Stack.Screen options={{ headerShown: false }} name="Stat" component={StatScreen} />
-        <Stack.Screen options={{ headerShown: false }} name="Test" component={TestScreen} />
       </Stack.Navigator>
     </NavigationContainer>
     </MenuProvider>

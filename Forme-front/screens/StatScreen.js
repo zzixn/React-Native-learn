@@ -13,17 +13,18 @@ import { BarChart } from "react-native-gifted-charts";
 
 const StatScreen = () => {
   const navigation = useNavigation();
-  const [selectedPeriod, setSelectedPeriod] = useState('year');
   const [selectedStatPeriod, setSelectedStatPeriod] = useState('year');
-
-  const handlePeriodChange = (period) => {
-    setSelectedPeriod(period);
-
-  };
+  const [selectedCategoryPeriod, setSelectedCategoryPeriod] = useState('year');
+  
   const handleStatPeriodChange = (period) => {
     setSelectedStatPeriod(period);
   };
 
+  const handleCategoryPeriodChange = (period) => {
+    setSelectedCategoryPeriod(period);
+
+  };
+ 
 
   const data = {
     year: [
@@ -39,16 +40,16 @@ const StatScreen = () => {
       { value: 5, label: "Feb" },
       { value: 6, label: "Mar" },
       { value: 7, label: "Apr" },
-      { value: 8, label: "May" },
+      { value: 10, label: "May" },
       { value: 9, label: "Jun" },
     ],
     week: [
-      { value: 1, label: "'19" },
-      { value: 2, label: "'20" },
-      { value: 3, label: "'21" },
-      { value: 4, label: "'22" },
-      { value: 5, label: "'23" },
-      { value: 6, label: "'24" },
+      { value: 1, label: "1주차" },
+      { value: 2, label: "2주차" },
+      { value: 3, label: "3주차" },
+      { value: 4, label: "4주차" },
+      { value: 5, label: "5주차" },
+      { value: 6, label: "6주차" },
     ],
   }
   const categoryColors = ['#6A9DFF', '#97BAFF', '#B9D0FF', '#CDCDCD', '#B2B2B2'];
@@ -116,12 +117,12 @@ const StatScreen = () => {
           </View>
         <View style={styles.chartBox}>
           <BarChart
-            barMarginBottom={0} // x축 두께 늘리면 얘도 늘랴즉;
+            barMarginBottom={0} // x축 두께 늘리면 얘도 늘려줌;
             barWidth={22} // bar 두께
             noOfSections={1} // 세로축 섹션
             barBorderRadius={4} // 모서리 둥글게
             frontColor="#508BFF" // bar 색상
-            data={data[selectedPeriod]}
+            data={data[selectedStatPeriod]}
             yAxisThickness={0} // Y축 두께
             xAxisThickness={0} // X축 두께
             hideRules // 기준선 지우기
@@ -135,25 +136,25 @@ const StatScreen = () => {
       <Text style={styles.subtitle}>최다 달성 카테고리</Text>
       <View style={styles.categoryPeriodButtons}>
             <TouchableOpacity
-              style={[styles.periodButton, selectedPeriod === 'year' && styles.selectedPeriodButton]}
-              onPress={() => handlePeriodChange('year')}
+              style={[styles.periodButton, selectedCategoryPeriod === 'year' && styles.selectedPeriodButton]}
+              onPress={() => handleCategoryPeriodChange('year')}
             >
               <Text style={styles.periodButtonText}>연간</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.periodButton, selectedPeriod === 'month' && styles.selectedPeriodButton]}
-              onPress={() => handlePeriodChange('month')}
+              style={[styles.periodButton, selectedCategoryPeriod === 'month' && styles.selectedPeriodButton]}
+              onPress={() => handleCategoryPeriodChange('month')}
             >
               <Text style={styles.periodButtonText}>월간</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={[styles.periodButton, selectedPeriod === 'week' && styles.selectedPeriodButton]}
-              onPress={() => handlePeriodChange('week')}
+              style={[styles.periodButton, selectedCategoryPeriod === 'week' && styles.selectedPeriodButton]}
+              onPress={() => handleCategoryPeriodChange('week')}
             >
               <Text style={styles.periodButtonText}>주간</Text>
             </TouchableOpacity>
           </View>
-          <CategoryRanking data={categoryData[selectedPeriod]}/>
+          <CategoryRanking data={categoryData[selectedCategoryPeriod]}/>
         </View>
       <View style={styles.menuBar}>
         <View style={styles.iconContainer}>
