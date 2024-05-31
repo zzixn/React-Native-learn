@@ -2,6 +2,7 @@ import { Pressable, StyleSheet, Text, TextInput, View, Alert, TouchableWithoutFe
 import React, { useEffect, useRef, useState } from 'react'
 import Checkbox from '../assets/checkbox.svg'
 import KebabMenu from '../assets/kebabmenu.svg'
+import InputIcon from '../assets/input.svg'
 import { Menu, MenuOptions, MenuOption, MenuTrigger } from 'react-native-popup-menu'
 
 const TodoItem = ({ todoItem, todoList, setTodoList, category }) => {
@@ -9,25 +10,6 @@ const TodoItem = ({ todoItem, todoList, setTodoList, category }) => {
   const [ newTodo, setNewTodo] = useState(todoItem.todo);
   const editInputRef = useRef(null);
   const [ categoryLabel, setCategoryLabel ] = useState(null);
-
-  // Todo 항목의 카테고리를 백엔드로부터 받아옴
-  useEffect(() => {
-    // fetch를 사용하여 백엔드와 통신하여 카테고리를 받아옴
-    fetch('your-backend-url/category', {
-      method: 'POST',
-      body: JSON.stringify({ todo: todoItem.todo }), // 현재 Todo 항목을 전송
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    })
-      .then(response => response.json())
-      .then(data => {
-        setCategoryLabel(data.category); // 받아온 카테고리를 상태에 설정
-      })
-      .catch(error => {
-        console.error('Error:', error);
-      });
-  }, [todoItem.todo]); // todoItem.todo가 변경될 때마다 실행
 
   const onClickEditButton = () => {
     setEdited(true);
@@ -83,7 +65,7 @@ const TodoItem = ({ todoItem, todoList, setTodoList, category }) => {
   const Divider = () => <View style={styles.divider} />;
 
   return (
-    <View style={styles.itemContainer}>
+    <View style={[styles.itemContainer, todoItem.checked && styles.checkedItemContainer]}>
       <Pressable style={styles.itemCheckbox} onPress={onChangeCheckbox} hitSlop={10}>
       <Checkbox />
       </Pressable>
@@ -107,9 +89,9 @@ const TodoItem = ({ todoItem, todoList, setTodoList, category }) => {
             <TouchableOpacity 
               onPress={onClickSubmitButton} 
               style={[styles.submitButtonContainer, styles.submitButton]}
-              hitSlop={10}
+              hitSlop={5}
             >
-              <Text style={styles.submitButton}>완료</Text>
+              <InputIcon />
             </TouchableOpacity>
           ) : (
             <KebabMenu />
@@ -175,6 +157,14 @@ const styles = StyleSheet.create({
   itemText: {
     flex: 1, // Todo 항목이 가능한 큰 공간을 차지하도록
   },
+  checkedItemContainer: {
+    backgroundColor: 'transparent',
+    marginVertical: -4
+  },
+  checkedItemText: {
+    textDecorationLine: 'line-through', // Todo 항목이 체크된 상태라면 취소선
+    color: '#999999'
+  },
   editInput: {
     flex: 1,
     marginRight: 80
@@ -184,8 +174,7 @@ const styles = StyleSheet.create({
     marginBottom: 3,
     paddingBottom: 4,
     paddingHorizontal: 4,
-    backgroundColor: '#508BFF',
-    borderRadius: 4
+    borderRadius: 0
   },
   submitButton: {
     fontWeight: 'bold',
